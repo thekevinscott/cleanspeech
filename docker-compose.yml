@@ -1,0 +1,21 @@
+version: '3.2'
+services:
+  cleanspeech:
+    build:
+      context: .
+      cache_from:
+        - nvidia/cuda:9.0-base-ubuntu16.04
+    image: cleanspeech:latest
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    ports:
+      - "8889:8888" # Jupyter Notebook
+        #- "6006:6006" # Tensorboard
+    container_name: cleanspeech
+    entrypoint: /bin/sh
+    volumes: ['./src:/notebooks']
+    # command: nvidia-smi
+    command: -c "jupyter notebook --ip=0.0.0.0 --no-browser --allow-root"
+
+
+
